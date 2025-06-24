@@ -1,11 +1,13 @@
-module github.com/ory/fosite-example
+module fosite-example
 
-go 1.17
+go 1.24
 
 require (
+	github.com/go-logr/logr v1.4.3
 	github.com/ory/fosite v0.42.3-0.20220508104133-3a0c9520791b
 	golang.org/x/net v0.17.0
 	golang.org/x/oauth2 v0.0.0-20200107190931-bf48bf16ab8d
+	gopkg.in/fsnotify.v1 v1.4.7
 )
 
 require (
