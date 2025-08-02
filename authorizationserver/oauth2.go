@@ -11,24 +11,26 @@ import (
 	"github.com/ory/fosite/handler/openid"
 	"github.com/ory/fosite/storage"
 	"github.com/ory/fosite/token/jwt"
+
+	"github.com/ory/fosite-example/middleware"
 )
 
 func RegisterHandlers() {
 	// Set up oauth2 endpoints. You could also use gorilla/mux or any other router.
-	http.HandleFunc("/oauth2/auth", authEndpoint)
-	http.HandleFunc("/oauth2/token", tokenEndpoint)
+	http.HandleFunc("/oauth2/auth", middleware.LoggingMiddleware(authEndpoint))
+	http.HandleFunc("/oauth2/token", middleware.LoggingMiddleware(tokenEndpoint))
 
 	// revoke tokens
-	http.HandleFunc("/oauth2/revoke", revokeEndpoint)
-	http.HandleFunc("/oauth2/introspect", introspectionEndpoint)
+	http.HandleFunc("/oauth2/revoke", middleware.LoggingMiddleware(revokeEndpoint))
+	http.HandleFunc("/oauth2/introspect", middleware.LoggingMiddleware(introspectionEndpoint))
 }
 
 // fosite requires four parameters for the server to get up and running:
-// 1. config - for any enforcement you may desire, you can do this using `compose.Config`. You like PKCE, enforce it!
-// 2. store - no auth service is generally useful unless it can remember clients and users.
-//    fosite is incredibly composable, and the store parameter enables you to build and BYODb (Bring Your Own Database)
-// 3. secret - required for code, access and refresh token generation.
-// 4. privateKey - required for id/jwt token generation.
+//  1. config - for any enforcement you may desire, you can do this using `compose.Config`. You like PKCE, enforce it!
+//  2. store - no auth service is generally useful unless it can remember clients and users.
+//     fosite is incredibly composable, and the store parameter enables you to build and BYODb (Bring Your Own Database)
+//  3. secret - required for code, access and refresh token generation.
+//  4. privateKey - required for id/jwt token generation.
 var (
 	// Check the api documentation of `compose.Config` for further configuration options.
 	config = &fosite.Config{
@@ -87,7 +89,7 @@ var oauth2 = compose.ComposeAllEnabled(config, store, privateKey)
 // setting up multiple strategies it is a bit longer.
 // Usually, you could do:
 //
-//  session = new(fosite.DefaultSession)
+//	session = new(fosite.DefaultSession)
 func newSession(user string) *openid.DefaultSession {
 	return &openid.DefaultSession{
 		Claims: &jwt.IDTokenClaims{
