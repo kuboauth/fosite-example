@@ -1,0 +1,82 @@
+Please open your webbrowser at http://localhost:3846
+
+-----------> REQUEST
+{
+  "id": 1,
+  "method": "GET",
+  "path": "/oauth2/auth",
+  "rawQuery": "client_id=my-client\u0026redirect_uri=http%3A%2F%2Flocalhost%3A3846%2Fcallback\u0026response_type=code\u0026scope=photos+openid+offline\u0026state=some-random-state-foobar\u0026nonce=some-random-nonce",
+  "bodySize": 0,
+  "body": ""
+}
+<----------- RESPONSE
+{
+  "id": 2,
+  "statusCode": 200,
+  "responseSize": 541,
+  "duration": 383542,
+  "headers": {
+    "Content-Type": [
+      "text/html; charset=utf-8"
+    ]
+  },
+  "body": "\u003ch1\u003eLogin page\u003c/h1\u003e\n\t\t\t\u003cp\u003eHowdy! This is the log in page. For this example, it is enough to supply the username.\u003c/p\u003e\n\t\t\t\u003cform method=\"post\"\u003e\n\t\t\t\t\u003cp\u003e\n\t\t\t\t\tBy logging in, you consent to grant th... [truncated]"
+}
+
+-----------> REQUEST
+{
+  "id": 3,
+  "method": "POST",
+  "path": "/oauth2/auth",
+  "rawQuery": "client_id=my-client\u0026redirect_uri=http%3A%2F%2Flocalhost%3A3846%2Fcallback\u0026response_type=code\u0026scope=photos+openid+offline\u0026state=some-random-state-foobar\u0026nonce=some-random-nonce",
+  "bodySize": 42,
+  "body": "scopes=photos\u0026scopes=openid\u0026username=peter"
+}
+<----------- RESPONSE
+{
+  "id": 4,
+  "statusCode": 303,
+  "responseSize": 0,
+  "duration": 204750,
+  "headers": {
+    "Cache-Control": [
+      "no-store"
+    ],
+    "Location": [
+      "http://localhost:3846/callback?code=bmT8nhF4ZUbVvqRz95rpqzPeitUFQC5hMmmyCuI411M.xZSHHMZQoNyuqS-n8IURSog8y-XK4V8_DY5A0vijJlM\u0026scope=photos+openid\u0026state=some-random-state-foobar"
+    ],
+    "Pragma": [
+      "no-cache"
+    ]
+  },
+  "body": ""
+}
+
+-----------> REQUEST
+{
+  "id": 5,
+  "method": "POST",
+  "path": "/oauth2/token",
+  "rawQuery": "",
+  "bodySize": 176,
+  "body": "code=bmT8nhF4ZUbVvqRz95rpqzPeitUFQC5hMmmyCuI411M.xZSHHMZQoNyuqS-n8IURSog8y-XK4V8_DY5A0vijJlM\u0026grant_type=authorization_code\u0026redirect_uri=http%3A%2F%2Flocalhost%3A3846%2Fcallback"
+}
+<----------- RESPONSE
+{
+  "id": 6,
+  "statusCode": 200,
+  "responseSize": 962,
+  "duration": 79182667,
+  "headers": {
+    "Cache-Control": [
+      "no-store"
+    ],
+    "Content-Type": [
+      "application/json;charset=UTF-8"
+    ],
+    "Pragma": [
+      "no-cache"
+    ]
+  },
+  "body": "{\"access_token\":\"gxYUORn18aHu5uf8g1MYDevTDQ6aMsQP1-ltzNux848.q99oc2uT40_bCepAeRo9RlrjFHR1vu-CwOUJcXL4rq4\",\"expires_in\":1800,\"id_token\":\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdF9oYXNoIjoiR2Z... [truncated]"
+}
